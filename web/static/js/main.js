@@ -7758,33 +7758,77 @@ var _elm_lang$html$Html_Attributes$classList = function (list) {
 };
 var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
 
-var _user$project$Components_ArticleList$renderArticles = _elm_lang$core$Native_List.fromArray(
+var _user$project$Article$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$span,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('article')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$a,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$href(model.url)
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$strong,
+						_elm_lang$core$Native_List.fromArray(
+							[]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text(model.title)
+							]))
+					])),
+				A2(
+				_elm_lang$html$Html$span,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(
+						A2(_elm_lang$core$Basics_ops['++'], ' Posted by: ', model.postedBy))
+					])),
+				A2(
+				_elm_lang$html$Html$em,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							' (posted on: ',
+							A2(_elm_lang$core$Basics_ops['++'], model.postedOn, ')')))
+					]))
+			]));
+};
+var _user$project$Article$Model = F4(
+	function (a, b, c, d) {
+		return {title: a, url: b, postedBy: c, postedOn: d};
+	});
+
+var _user$project$Components_ArticleList$renderArticle = function (article) {
+	return A2(
+		_elm_lang$html$Html$li,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_user$project$Article$view(article)
+			]));
+};
+var _user$project$Components_ArticleList$articles = _elm_lang$core$Native_List.fromArray(
 	[
-		A2(
-		_elm_lang$html$Html$li,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html$text('Article 1')
-			])),
-		A2(
-		_elm_lang$html$Html$li,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html$text('Article 2')
-			])),
-		A2(
-		_elm_lang$html$Html$li,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html$text('Article 3')
-			]))
+		{title: 'Article 1', url: 'http://google.com', postedBy: 'Author', postedOn: '06/06/16'},
+		{title: 'Article 2', url: 'http://google.com', postedBy: 'Author 2', postedOn: '06/20/16'},
+		{title: 'Article 3', url: 'http://google.com', postedBy: 'Author 3', postedOn: '06/20/16'}
 	]);
+var _user$project$Components_ArticleList$renderArticles = A2(_elm_lang$core$List$map, _user$project$Components_ArticleList$renderArticle, _user$project$Components_ArticleList$articles);
 var _user$project$Components_ArticleList$view = A2(
 	_elm_lang$html$Html$div,
 	_elm_lang$core$Native_List.fromArray(
