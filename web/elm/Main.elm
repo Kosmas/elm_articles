@@ -65,3 +65,30 @@ main =
     , update = update
     , subscriptions = subscriptions
     }
+
+-- HTTP calls
+fetchArticles : Cmd Msg
+fetchArticles =
+  let
+    url = "/api/articles"
+  in
+    Task.perform FetchFail FetchSucceed (Http.get decodeArticleFetch url)
+
+-- Fetch the articles out of the "data" key
+decodeArticleFetch : Json.Decoder (List Article.Model)
+decodeArticleFetch =
+  Json.at ["data"] decodeArticleList
+
+-- Then decode the "data" key into a List of Article.Models
+decodeArticleList : Json.Decoder (List Article.Model)
+decodeArticleList =
+  Json.list decodeArticleData
+
+-- Finally, build the decoder for each individual Article.Model
+decodeArticleData : Json.Decoder Article.Model
+decodeArticleData =
+  Json.object4 Article.Model
+    ("title" := Json.string)
+    ("url" := Json.string)
+    ("posted_by" := Json.string)
+    ("posted_on" := Json.string)
