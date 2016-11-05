@@ -22,14 +22,27 @@ init =
 -- UPDATE
 
 type Msg
-  = ArticleListMsg ArticleList.Msg
+  = NoOp
+  | Fetch
+  | FetchSucceed ( List Article.Model)
+  | FetchFail Http.Error
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
-    ArticleListMsg articleMsg ->
-      let (updateModel, cmd) = ArticleList.update articleMsg model.articleListModel
-      in ( { model | articleListModel = updateModel }, Cmd.map ArticleListMsg cmd )
+    NoOp ->
+      (model, Cmd.none)
+    Fetch ->
+      (model, fetchArticles)
+    FetchSucceed articleList ->
+      (Model articleList, Cmd.none)
+    FetchFail error ->
+      case error of
+        Http.UnexpectedPayload errorMessage ->
+          Debug.log errorMessage
+          (model, Cmd.none)
+        _ ->
+          (model, Cmd.none)
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
